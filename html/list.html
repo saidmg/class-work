@@ -124,7 +124,6 @@
                       <button id="${id}" class="btn btn-secondary fl">Cancel</button>
                      </div>
                  </div>`
-            // console.log(id)
 
             const editData = {
                 headers: { 'Content-Type': 'application/json' },
@@ -156,8 +155,19 @@
             window.location = '/list.html'             
             await fetch(`/api/:${id}`, editData).then(res => res.json())
         }
-   
+        
+        //Delete Contact
+        async function deleteContact(id){
+            const deleteData = {
+                headers: { 'Content-Type': 'application/json' },
+                method: 'DELETE',
+            }
+       
+            window.location = '/list.html'             
 
+         let result = await fetch(`/api/list/${id}`,deleteData).then(r => r.json())
+        } 
+            
     </script>
 </body>
 

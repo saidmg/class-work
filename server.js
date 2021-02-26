@@ -31,6 +31,12 @@ app.post('/api/contact', async function (req, res) {
 
 });
 
+app.delete(`/api/list/:id`, async function(req, res){
+    let deleteId = req.params.id
+    let result = await db.query(`DELETE from contact Where id =?`, deleteId)
+}
+);
+
 app.put(`/api/:id`, async function (req, res) {
     const contactInfo = req.body;
     // console.log(contactInfo)
