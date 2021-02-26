@@ -15,6 +15,9 @@
   border-top-width: 60px;
   border-bottom-width: 60px;
   border-radius: 36px;
+  background-image: url(./assets/wallpaper.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 /* The horizontal line on the top of the device */
@@ -50,57 +53,22 @@
   width: 360px;
   height: 640px;
   
-}
+}  
 .navbar{ width: 325px;}
 </style>
 </head>
 <body>
-
-<div class="smartphone">
-  <div class="content">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" >
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Home</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">Contacts</a>
-              </li>
-           
-            
-            </ul>
-            <form class="d-flex">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-          </div>
-        </div>
-      </nav>
-      <form action="/api/contact" method="POST" >
-        <div style="width: 325px; margin-top: 10%; padding: 5%;">
-        <div class="mb-3">
-            <h2 style="margin-bottom: 5%;">Contact Info</h2>
-            <label for="firstName" class="form-label">First Name</label>
-            <input type="text" name="firstName" class="form-control" id="firstName" placeholder="John">
-          </div>
-          <div class="mb-3">
-            <label for="lastName" class="form-label">Last Name</label>
-            <input type="text" name="lastName" class="form-control" id="lastName" placeholder="Doe">
-          </div>
-          <div class="mb-3">
-            <label for="phoneNumber" class="form-label">Phone Number</label>
-            <input type="text" name="phoneNumber" class="form-control" id="phoneNumber" placeholder="999-999-9999">
-          </div>
-        <button class="btn btn-primary">Save</button>
-        <button class="btn btn-danger float-end">cancel</button>
-        </div>
-    </form>
-  <!-- safsafsafas -->
-  </div>
+<div class="smartphone" style="margin-top: 1%;">
+  <div style="margin-top: 50%; padding: 35%;">
+ <a href="/contact.html"><button class="btn btn-light btn-sml " style="margin-bottom: 10%;">New Contact</button></a>
+ <a href="/list.html"><button class="btn btn-light btn-sml float-end">Contact List</button></a>
 </div>
+  
+</div></div>    
 
+<script>
+      
+      
+</script>
 </body>
 </html>
