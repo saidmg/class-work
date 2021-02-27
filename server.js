@@ -9,11 +9,6 @@ app.use(express.static('html'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// let contactList = [
-//     { firstName:"Ilias", lastName:"C", phoneNumber: "+1(999)999-9999", id:1},
-//     { firstName:"Muhammad", lastName:"Alim", phoneNumber: "+1(234)567-7890", id:2}
-// ]
-
 app.get(`/api/contact/:id`, async function (req, res) {
     id = req.params.id
     let result = await orm.getInfo1()
@@ -25,30 +20,27 @@ app.get('/api/searchedContact/:search', async function (req, res) {
     contactInfo = contactInfo.split(" ");
     let result = await orm.searchFunction(contactInfo)
     res.send(result)
-
 });
 
 app.post('/api/contact', async function (req, res) {
     const contactInfo = req.body;
- let result = await orm.createContactFunction(contactInfo)
-   res.redirect('/../list.html')
+    let result = await orm.createContactFunction(contactInfo)
+    res.redirect('/../list.html')
 });
 
-app.delete(`/api/contact/:id`, async function(req, res){
+app.delete(`/api/contact/:id`, async function (req, res) {
     let deleteId = req.params.id
     let result = await orm.deleteContactFunction(deleteId)
-
-}
-);
+});
 
 app.put(`/api/contact/:id`, async function (req, res) {
     const contactInfo = req.body;
     id = req.params.id
-    let result = await orm.updateContactFunction(id,contactInfo)
+    let result = await orm.updateContactFunction(id, contactInfo)
 });
 
 app.get('/api/contact', async function (req, res) {
-   let result = await orm.showContactFunction()
+    let result = await orm.showContactFunction()
     res.send(result);
 });
 
