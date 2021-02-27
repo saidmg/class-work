@@ -78,31 +78,27 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-                        <form class="d-flex">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
-                        </form>
+                            <input id="searchValue" class="form-control me-2" type="text" placeholder="Search" aria-label="Search">
+                            <button onclick="searchContact()" class="btn btn-outline-success" type="submit">Search</button>
+                        
                     </div>
                 </div>
             </nav>
             <div id="contactInfo" >
                 <button onclick=""></button>
             </div>
-            <!-- safsafsafas -->
         </div>
     </div>
     <script>
+        
  //Delete Contact
  async function deleteContact(id){
             const deleteData = {
                 headers: { 'Content-Type': 'application/json' },
                 method: 'delete',
             }
-            console.log("contact deleted")
 
-            // window.location = '/list.html'             
          const result =  fetch(`/api/contact/${id}`,deleteData).then(r => r.json())
-         console.log("contact deleted")
          getInfo()
         } 
             
@@ -127,10 +123,13 @@
 
             }
             const result = await fetch(`/api/contact/${id}`, editData).then(res => res.json())
-            // console.log(result[0].first_name)
             document.getElementById('firstName').value = result[0].first_name
             document.getElementById('lastName').value = result[0].last_name
             document.getElementById('phoneNumber').value = result[0].phone_number
+        }
+
+        function cancelEdit(){
+            window.location = '/list.html'             
         }
 
          async function submitEdit(id) {
@@ -140,17 +139,36 @@
                 , phone_number: document.getElementById('phoneNumber').value
             }]
 
-
-            //   console.log(data)
             // post requires header, method + data to be sent
             const editData = {
                 headers: { 'Content-Type': 'application/json' },
                 method: 'put',
                 body: JSON.stringify(data)
             }
-            console.log('done')
             window.location = '/list.html'             
             await fetch(`/api/contact/${id}`, editData).then(res => res.json())
+        }
+
+        async function searchContact() {
+            searchValue = document.querySelector('#searchValue').value
+            const editData = {
+                headers: { 'Content-Type': 'application/json' },
+                method: 'get',
+
+            }
+            const contactInfo = await fetch(`/api/searchedContact/${searchValue}`,editData).then(r => r.json())
+            document.querySelector('#contactInfo').innerHTML = ''
+            contactInfo.forEach(contact => {
+                document.querySelector('#contactInfo').innerHTML += `
+                 <div class="card text-center" style="width: 325px; margin-top: 5%;">
+                   <h5 class="card-header">${contact.first_name} ${contact.last_name}</h5>
+                     <div class="card-body">
+                      <h5 class="card-title">${contact.phone_number}</h5>
+                      <button id="${contact.id}" onclick="editContact(${contact.id})" class="btn btn-primary fl">Edit</button>
+                      <button id="${contact.id}" onclick="deleteContact(${contact.id})" class="btn btn-secondary fl">Delete</button>
+                     </div>
+                 </div>`
+            })
         }
         async function getInfo() {
             const contactInfo = await fetch('/api/contact').then(r => r.json())
