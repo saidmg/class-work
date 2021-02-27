@@ -20,6 +20,7 @@
   "homepage": "https://github.com/saidmg/contact-book#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "express-handlebars": "^5.2.1",
     "mysql": "^2.18.1"
   }
 }

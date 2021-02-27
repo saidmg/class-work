@@ -15,9 +15,8 @@ app.use(express.json());
 //     { firstName:"Muhammad", lastName:"Alim", phoneNumber: "+1(234)567-7890", id:2}
 // ]
 
-app.get(`/api/:sample/:id`, async function (req, res) {
-    id = req.params.id.substring(1)
-
+app.get(`/api/contact/:id`, async function (req, res) {
+    id = req.params.id
     // console.log(id)
     res.send(await db.query(`SELECT * from contact Where id = ${id}`))
 });
@@ -26,29 +25,31 @@ app.get(`/api/:sample/:id`, async function (req, res) {
 app.post('/api/contact', async function (req, res) {
     const contactInfo = req.body;
     // console.log(contactInfo)
-
-    let result = await db.query(`INSERT INTO contact (id,first_name,last_name,phone_number) VALUES (0,'${contactInfo.firstName}','${contactInfo.lastName}','${contactInfo.phoneNumber}');`)
-
+    const result = await db.query(`INSERT INTO contact (first_name,last_name,phone_number) VALUES
+     (?,?,?)`,[contactInfo.firstName,contactInfo.lastName,contactInfo.phoneNumber])
+   res.redirect('/../list.html')
 });
 
-app.delete(`/api/list/:id`, async function(req, res){
+app.delete(`/api/contact/:id`, async function(req, res){
     let deleteId = req.params.id
     let result = await db.query(`DELETE from contact Where id =?`, deleteId)
+    // res.redirect('/../list.html')
+
 }
 );
 
-app.put(`/api/:id`, async function (req, res) {
+app.put(`/api/contact/:id`, async function (req, res) {
     const contactInfo = req.body;
     // console.log(contactInfo)
-    id = req.params.id.substring(1)
-    // console.log(id)
+    id = req.params.id
+    console.log(id)
     // console.log(contactInfo[0].firstName)
     let result = await db.query(`UPDATE contact SET first_name ='${contactInfo[0].first_name}' , last_name= '${contactInfo[0].last_name}' , phone_number ='${contactInfo[0].phone_number}' WHERE id = ${id} `);
 
     // res.send( contactList1 );
 });
 
-app.get('/api/display', async function (req, res) {
+app.get('/api/contact', async function (req, res) {
     let contactList1 = await db.query('SELECT * from contact');
     res.send(contactList1);
 });

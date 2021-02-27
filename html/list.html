@@ -92,9 +92,68 @@
         </div>
     </div>
     <script>
+ //Delete Contact
+ async function deleteContact(id){
+            const deleteData = {
+                headers: { 'Content-Type': 'application/json' },
+                method: 'delete',
+            }
+            console.log("contact deleted")
 
+            // window.location = '/list.html'             
+         const result =  fetch(`/api/contact/${id}`,deleteData).then(r => r.json())
+         console.log("contact deleted")
+         getInfo()
+        } 
+            
+       
+        async function editContact(id) {
+            document.querySelector('#contactInfo').innerHTML = ''
+
+            document.querySelector('#contactInfo').innerHTML += `
+                 <div class="card text-center" style="width: 325px; margin-top: 5%;">
+                   <h5 class="card-header"><input id="firstName" type="text"  placeholder="First Name" class="" >
+                    <input type="text" id="lastName" placeholder="Last Name" class="" ></h5>
+                     <div class="card-body">
+                      <h5 class="card-title"><input type="text" id="phoneNumber" placeholder="Phone Number" class="" ></h5>
+                      <button  onclick="submitEdit(${id})" class="btn btn-primary fl">Save</button>
+                      <button  onclick="cancelEdit()" class="btn btn-secondary fl">Cancel</button>
+                     </div>
+                 </div>`
+
+            const editData = {
+                headers: { 'Content-Type': 'application/json' },
+                method: 'get',
+
+            }
+            const result = await fetch(`/api/contact/${id}`, editData).then(res => res.json())
+            // console.log(result[0].first_name)
+            document.getElementById('firstName').value = result[0].first_name
+            document.getElementById('lastName').value = result[0].last_name
+            document.getElementById('phoneNumber').value = result[0].phone_number
+        }
+
+         async function submitEdit(id) {
+
+            let data = [{
+                first_name: document.getElementById('firstName').value, last_name: document.getElementById('lastName').value
+                , phone_number: document.getElementById('phoneNumber').value
+            }]
+
+
+            //   console.log(data)
+            // post requires header, method + data to be sent
+            const editData = {
+                headers: { 'Content-Type': 'application/json' },
+                method: 'put',
+                body: JSON.stringify(data)
+            }
+            console.log('done')
+            window.location = '/list.html'             
+            await fetch(`/api/contact/${id}`, editData).then(res => res.json())
+        }
         async function getInfo() {
-            const contactInfo = await fetch('/api/display').then(r => r.json())
+            const contactInfo = await fetch('/api/contact').then(r => r.json())
 
             document.querySelector('#contactInfo').innerHTML = ''
             contactInfo.forEach(contact => {
@@ -110,64 +169,8 @@
             })
 
         }
-        getInfo()
-        async function editContact(id) {
-            document.querySelector('#contactInfo').innerHTML = ''
-
-            document.querySelector('#contactInfo').innerHTML += `
-                 <div class="card text-center" style="width: 325px; margin-top: 5%;">
-                   <h5 class="card-header"><input id="firstName" type="text"  placeholder="First Name" class="" >
-                    <input type="text" id="lastName" placeholder="Last Name" class="" ></h5>
-                     <div class="card-body">
-                      <h5 class="card-title"><input type="text" id="phoneNumber" placeholder="Phone Number" class="" ></h5>
-                      <button id="${id}" onclick="submitEdit(id)" class="btn btn-primary fl">Save</button>
-                      <button id="${id}" class="btn btn-secondary fl">Cancel</button>
-                     </div>
-                 </div>`
-
-            const editData = {
-                headers: { 'Content-Type': 'application/json' },
-                method: 'get',
-
-            }
-            let result = await fetch(`/api/:sample/:${id}`, editData).then(res => res.json())
-            // console.log(result[0].first_name)
-            document.getElementById('firstName').value = result[0].first_name
-            document.getElementById('lastName').value = result[0].last_name
-            document.getElementById('phoneNumber').value = result[0].phone_number
-        }
-
-         async function submitEdit(id) {
-
-            let data = [{
-                first_name: document.getElementById('firstName').value, last_name: document.getElementById('lastName').value
-                , phone_number: document.getElementById('phoneNumber').value
-            }]
-
-            //   console.log(data)
-            // post requires header, method + data to be sent
-            const editData = {
-                headers: { 'Content-Type': 'application/json' },
-                method: 'put',
-                body: JSON.stringify(data)
-            }
-            // console.log('done')
-            window.location = '/list.html'             
-            await fetch(`/api/:${id}`, editData).then(res => res.json())
-        }
-        
-        //Delete Contact
-        async function deleteContact(id){
-            const deleteData = {
-                headers: { 'Content-Type': 'application/json' },
-                method: 'DELETE',
-            }
+        getInfo() 
        
-            window.location = '/list.html'             
-
-         let result = await fetch(`/api/list/${id}`,deleteData).then(r => r.json())
-        } 
-            
     </script>
 </body>
 
