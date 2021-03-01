@@ -28,12 +28,12 @@ app.post('/api/contact', async function (req, res) {
     res.redirect('/../list.html')
 });
 
-app.delete(`/api/contact/:id`, async function (req, res) {
+app.delete('/api/contact/:id', async function (req, res) {
     let deleteId = req.params.id
     let result = await orm.deleteContactFunction(deleteId)
 });
 
-app.put(`/api/contact/:id`, async function (req, res) {
+app.put('/api/contact/:id', async function (req, res) {
     const contactInfo = req.body;
     id = req.params.id
     let result = await orm.updateContactFunction(id, contactInfo)
