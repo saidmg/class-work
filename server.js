@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const orm = require('./app/orm')
-const PORT = 3000; // for Heroku ? process.env.PORT || 3000
+const PORT = process.env.PORT || 3000;
 
 // will share any static html files with the browser
 app.use(express.static('html'));
@@ -9,7 +9,7 @@ app.use(express.static('html'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get(`/api/contact/:id`, async function (req, res) {
+app.get('/api/contact/:id', async function (req, res) {
     id = req.params.id
     let result = await orm.getInfo1()
     res.send(result)
